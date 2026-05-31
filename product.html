@@ -29,13 +29,13 @@
       <!-- Tweaks for older IEs-->
       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
    </head>
-   <body>
-      <div class="header_section header_bg">
+     <body>
+      <div class="header_section">
          <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-               <a class="navbar-brand"href="index.html"><img src="images/ikon.png"></a>
+               <a class="navbar-brand" href="index.html"><img src="images/ikon.png"></a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
+                  <span class="navbar-toggler-icon"></span>
                </button>
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ml-auto">
@@ -54,15 +54,40 @@
                      <li class="nav-item">
                         <a class="nav-link" href="contact.html">Hubungi Kami</a>
                      </li>
+                     <li class="nav-item nav-login-item">
+                        <p id="userInfo" class="user_info_text">Belum login</p>
+                        <div id="authArea">
+                           <button onclick="goLogin()" class="nav-login-btn">
+                              <i class="fa fa-sign-in"></i> Login
+                           </button>
+                        </div>
+                     </li>
                   </ul>
                   <form class="form-inline my-2 my-lg-0">
-                     <div class="login_bt"><a href="#">Login <span style="color: #222222;"><i class="fa fa-user" aria-hidden="true"></i></span></a></div>
                      <div class="fa fa-search form-control-feedback"></div>
                   </form>
+                  <header>
+   <a href="cart.html" class="icon-cart">
+
+      <svg xmlns="http://www.w3.org/2000/svg"
+         width="24"
+         height="24"
+         fill="none"
+         viewBox="0 0 24 24">
+
+         <path stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+      </svg>
+
+      <span id="cart-count">0</span>
+
+   </a>
                </div>
             </nav>
          </div>
-      </div>
       <!-- header section end -->
       <!-- cream sectuion start -->
 <div class="cream_section layout_padding">
