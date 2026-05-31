@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cart - Daisymphony</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- QR CODE -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#fff7fb;
+            color:#333;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+        /* HEADER */
+
+        .header{
+            width:100%;
+            background:white;
+            padding:18px 8%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 4px 20px rgba(0,0,0,0.05);
+            position:sticky;
+            top:0;
+            z-index:999;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo img{
+            width:55px;
+        }
+
+        .logo h2{
+            color:#fc95c4;
+            font-size:28px;
+            font-weight:bold;
+        }
+
+        .back-btn{
+            padding:12px 22px;
+            background:#fc95c4;
+            color:white;
+            border-radius:40px;
+            font-weight:600;
+        }
+
+        .back-btn:hover{
+            background:#ff78b5;
+        }
+
+        /* CONTAINER */
+
+        .container{
+            width:90%;
+            max-width:1200px;
+            margin:auto;
+            padding:60px 0;
+        }
+
+        .page-title{
+            text-align:center;
+            margin-bottom:50px;
+        }
+
+        .page-title h1{
+            font-size:50px;
+            color:#373736;
+            margin-bottom:15px;
+        }
+
+        .page-title p{
+            color:#777;
+            font-size:17px;
+        }
+
+        .cart-wrapper{
+            display:grid;
+            grid-template-columns:1.5fr 1fr;
+            gap:30px;
+        }
+
+        /* CART ITEM */
+
+        .cart-box{
+            background:white;
+            border-radius:30px;
+            padding:30px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.06);
+        }
+
+        .cart-item{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+            padding:25px 0;
+            border-bottom:1px solid #f1f1f1;
+        }
+
+        .cart-item:last-child{
+            border-bottom:none;
+        }
+
+        .item-left{
+            display:flex;
+            align-items:center;
+            gap:20px;
+        }
+
+        .item-image{
+            width:110px;
+            height:110px;
+            border-radius:20px;
+            overflow:hidden;
+            background:#fff0f5;
+            flex-shrink:0;
+        }
+
+        .item-image img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .item-info h3{
+            font-size:23px;
+            color:#373736;
+            margin-bottom:10px;
+        }
+
+        .item-price{
+            color:#fc95c4;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        .delete-btn{
+            border:none;
+            background:#fff0f5;
+            color:#ff4f81;
+            width:50px;
+            height:50px;
+            border-radius:15px;
+            cursor:pointer;
+            font-size:18px;
+        }
+
+        .delete-btn:hover{
+            background:#ff4f81;
+            color:white;
+            transform:scale(1.08);
+        }
+
+        /* SUMMARY */
+
+        .summary-box{
+            background:white;
+            border-radius:30px;
+            padding:35px;
+            box-shadow:0 10px 40px rgba(0,0,0,0.06);
+            position:sticky;
+            top:110px;
+            height:fit-content;
+        }
+
+        .summary-title{
+            font-size:32px;
+            color:#373736;
+            margin-bottom:25px;
+            font-weight:bold;
+        }
+
+        .summary-row{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:18px;
+            font-size:17px;
+        }
+
+        .summary-row.total{
+            margin-top:25px;
+            padding-top:20px;
+            border-top:2px dashed #ffc2d7;
+            font-size:25px;
+            font-weight:bold;
+            color:#fc95c4;
+        }
+
+        /* QRIS */
+
+        .qris-area{
+            margin-top:35px;
+            background:#fff5f8;
+            border-radius:25px;
+            padding:25px;
+            text-align:center;
+        }
+
+        .qris-area h3{
+            color:#fc95c4;
+            margin-bottom:12px;
+            font-size:24px;
+        }
+
+        .qris-area p{
+            color:#666;
+            font-size:15px;
+            line-height:1.7;
+            margin-bottom:20px;
+        }
+
+        #qrcode{
+            background:white;
+            padding:20px;
+            border-radius:25px;
+            width:fit-content;
+            margin:auto;
+            box-shadow:0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        /* BUTTON */
+
+        .btn{
+            width:100%;
+            border:none;
+            padding:17px;
+            border-radius:18px;
+            font-size:17px;
+            font-weight:bold;
+            cursor:pointer;
+            margin-top:18px;
+        }
+
+        .wa-btn{
+            background:#fc95c4;
+            color:white;
+        }
+
+        .wa-btn:hover{
+            background:#ff78b5;
+            transform:translateY(-2px);
+        }
+
+        .invoice-btn{
+            background:#373736;
+            color:white;
+        }
+
+        .invoice-btn:hover{
+            background:black;
+            transform:translateY(-2px);
+        }
+
+        /* EMPTY */
+
+        .empty-cart{
+            text-align:center;
+            padding:70px 20px;
+        }
+
+        .empty-cart i{
+            font-size:70px;
+            color:#ffc2d7;
+            margin-bottom:20px;
+        }
+
+        .empty-cart h2{
+            font-size:32px;
+            margin-bottom:10px;
+            color:#444;
+        }
+
+        .empty-cart p{
+            color:#888;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:900px){
+
+            .cart-wrapper{
+                grid-template-columns:1fr;
+            }
+
+            .summary-box{
+                position:static;
+            }
+
+        }
+
+        .cart-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.cart-image{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:18px;
+    background:#fff0f5;
+    padding:8px;
+    border:2px solid #ffd6e3;
+}
+
+        @media(max-width:650px){
+
+            .cart-item{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .item-left{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .delete-btn{
+                width:100%;
+            }
+
+            .page-title h1{
+                font-size:38px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            <img src="images/ikon.png">
+            <h2>Daisymphony</h2>
+        </div>
+
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Kembali
+        </a>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+        <div class="page-title">
+
+            <h1>
+                Keranjang Belanja
+            </h1>
+
+            <p>
+                Handmade lucu-lucu yang akhirnya masuk keranjang.
+            </p>
+
+        </div>
+
+
+        <div class="cart-wrapper">
+
+            <!-- CART -->
+
+            <div class="cart-box" id="cart-items">
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-box">
+
+                <h2 class="summary-title">
+                    Ringkasan
+                </h2>
+
+                <div class="summary-row">
+                    <span>Total Produk</span>
+                    <span id="total-item">0</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-price">Rp 0</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Biaya Admin</span>
+                    <span>Rp 1.000</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="grand-total">Rp 0</span>
+                </div>
+
+
+                <!-- QRIS -->
+
+                <div class="qris-area">
+
+                    <h3>
+                        Pembayaran QRIS
+                    </h3>
+
+                    <p>
+                        Scan QRIS berikut untuk pembayaran otomatis sesuai total belanja.
+                    </p>
+
+                    <div id="qrcode"></div>
+
+                </div>
+
+
+                <button class="btn wa-btn" onclick="checkoutWhatsapp()">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Checkout WhatsApp
+
+                </button>
+
+                <a href="invoice.html">
+
+                    <button class="btn invoice-btn">
+
+                        <i class="fa-solid fa-file-invoice"></i>
+                        Lihat Invoice
+
+                    </button>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartItems = document.getElementById("cart-items");
+const totalItem = document.getElementById("total-item");
+const subtotalPrice = document.getElementById("subtotal-price");
+const grandTotal = document.getElementById("grand-total");
+
+function renderCart(){
+
+    cartItems.innerHTML = "";
+
+    if(cart.length === 0){
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <h2>Keranjang Kosong</h2>
+
+                <p>
+                    Belum ada produk di cart.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach((item,index)=>{
+
+        subtotal += item.price;
+
+        cartItems.innerHTML += `
+
+            <div class="cart-item">
+
+                <div class="item-left">
+
+                    <div class="item-image">
+
+                        <img src="${item.image}" 
+                        onerror="this.src='images/placeholder.png'">
+
+                    </div>
+
+                    <div class="item-info">
+
+                        <h3>${item.name}</h3>
+
+                        <div class="item-price">
+                            Rp ${item.price.toLocaleString('id-ID')}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button class="delete-btn" onclick="removeItem(${index})">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+    const adminFee = 1000;
+
+    const finalTotal = subtotal + adminFee;
+
+    totalItem.innerHTML = cart.length;
+
+    subtotalPrice.innerHTML =
+    `Rp ${subtotal.toLocaleString('id-ID')}`;
+
+    grandTotal.innerHTML =
+    `Rp ${finalTotal.toLocaleString('id-ID')}`;
+
+    generateQRIS(finalTotal);
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    renderCart();
+}
+
+function checkoutWhatsapp(){
+
+    if(cart.length === 0){
+
+        alert("Keranjang masih kosong!");
+
+        return;
+    }
+
+    let message =
+    "Halo Daisymphony! Saya ingin memesan:%0A%0A";
+
+    let total = 0;
+
+    cart.forEach((item)=>{
+
+        message +=
+        `• ${item.name} - Rp ${item.price.toLocaleString('id-ID')}%0A`;
+
+        total += item.price;
+
+    });
+
+    message +=
+    `%0ATotal Pembayaran: Rp ${(total + 1000).toLocaleString('id-ID')}%0A`;
+
+    message +=
+    `%0ASaya sudah melakukan pembayaran QRIS dan akan mengirim bukti transfer.`;
+
+    window.open(
+        `https://wa.me/6287839127336?text=${message}`,
+        "_blank"
+    );
+}
+
+
+/* ======================
+   QRIS DINAMIS
+====================== */
+
+const qrisStatic =
+"00020101021126570011ID.DANA.WWW011893600915354846259702095484625970303UMI51440014ID.CO.QRIS.WWW0215ID10233009415570303UMI5204561153033605802ID5911Daisymphony6015Kota Yogyakarta6105551126304B2AA";
+
+
+function toCRC16(input){
+
+    let crc = 0xFFFF;
+
+    for(let c = 0; c < input.length; c++){
+
+        crc ^= input.charCodeAt(c) << 8;
+
+        for(let i = 0; i < 8; i++){
+
+            if((crc & 0x8000) !== 0){
+                crc = (crc << 1) ^ 0x1021;
+            }else{
+                crc <<= 1;
+            }
+
+            crc &= 0xFFFF;
+        }
+    }
+
+    return crc.toString(16).toUpperCase().padStart(4,'0');
+}
+
+
+function makeDynamicQRIS(qris, amount){
+
+    qris = qris.slice(0, -4);
+
+    const amountStr = amount.toString();
+
+    const tag54 =
+        "54" +
+        amountStr.length.toString().padStart(2,'0') +
+        amountStr;
+
+    let output =
+        qris.replace("5802ID", tag54 + "5802ID");
+
+    output += toCRC16(output);
+
+    return output;
+}
+
+
+function generateQRIS(amount){
+
+    const qrisDinamis =
+    makeDynamicQRIS(qrisStatic, amount);
+
+    const qrContainer =
+    document.getElementById("qrcode");
+
+    qrContainer.innerHTML = "";
+
+    QRCode.toCanvas(
+        qrisDinamis,
+        {
+            width:250,
+            margin:2
+        },
+        function(error, canvas){
+
+            if(error){
+
+                console.error(error);
+
+                qrContainer.innerHTML =
+                "<p>QRIS gagal dimuat</p>";
+
+                return;
+            }
+
+            qrContainer.appendChild(canvas);
+        }
+    );
+}
+
+renderCart();
+
+</script>
+
+</body>
+</html>
